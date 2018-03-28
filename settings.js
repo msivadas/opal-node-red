@@ -18,6 +18,7 @@
 // to make it available:
 //var fs = require("fs");
 
+
 module.exports = {
     // the tcp port that the Node-RED web server is listening on
     uiPort: process.env.PORT || 1880,
@@ -244,6 +245,8 @@ module.exports = {
         // octalbonescript:require('octalbonescript'),
         // jfive:require("johnny-five"),
         // j5board:require("johnny-five").Board({repl:false})
+        opalLogger:require('opal-logger'),
+        opalConfig:require('config')
     },
 
     // The following property can be used to order the categories in the editor
@@ -269,6 +272,17 @@ module.exports = {
             metrics: false,
             // Whether or not to include audit events in the log output
             audit: false
-        }
-    }
+        },
+        opal: {
+            level:'off',
+            metrics:true,
+            audit:true,
+            handler: function(conf) {
+                const { systemLogger } = require('opal-logger');
+                return function(msg) {
+                  systemLogger.log('info',msg );
+                };
+            }
+        } //opal
+    } // logging
 }

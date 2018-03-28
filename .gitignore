@@ -21,3 +21,4 @@ samples
 *.orig
 *.bak
 package-lock.json
+*.log
